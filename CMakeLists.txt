@@ -1,16 +1,28 @@
 cmake_minimum_required(VERSION 3.20)
 
 #User define
-set(CMAKE_C_COMPILER "/tool/gcc/install/8.1.0/bin/gcc")
-set(CMAKE_CXX_COMPILER "/tool/gcc/install/8.1.0/bin/g++")
-set(SPARSEHASH_INCLUDE_DIR "/tool/cpplib/sparsehash/install/include")
-set(Boost_INCLUDE_DIR "/tool/cpplib/boost/install/1.79.0/include")
+# 删除或注释掉 GCC 相关设置
+# set(CMAKE_C_COMPILER "/usr/local/bin/gcc-14")
+# set(CMAKE_CXX_COMPILER "/usr/local/bin/gcc-14")
+set(SPARSEHASH_INCLUDE_DIR "/usr/local/include")
+set(Boost_INCLUDE_DIR "/usr/local/include")
 
 project(FSQM)
 
-set(CMAKE_CXX_STANDARD 17)
+# 设置 C++ 标准
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_CXX_FLAGS "-std=c++11 -static-libstdc++ -O3 -fopenmp -fpermissive -DNDEBUG -DIL_STD -pg -Wno-ctor-dtor-privacy")
+# 基础编译标志
+set(BASE_CXX_FLAGS "-O3 -fpermissive -DNDEBUG -DIL_STD -Wno-ctor-dtor-privacy")
+
+# OpenMP 支持检查
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND)
+    set(CMAKE_CXX_FLAGS "${BASE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+else()
+    set(CMAKE_CXX_FLAGS "${BASE_CXX_FLAGS}")
+endif()
 
 set(TOOL
         src/qasm-tools/QASMtoken.cpp
@@ -31,8 +43,21 @@ set(SRC
 
 add_executable(FSQM src/main.cpp ${SRC} ${TOOL})
 
-target_include_directories(FSQM PUBLIC ${CMAKE_SOURCE_DIR}/include ${Boost_INCLUDE_DIR} ${SPARSEHASH_INCLUDE_DIR})
+if(APPLE)
+    target_link_libraries(FSQM PRIVATE stdc++ c++)
+endif()
+
+target_include_directories(FSQM 
+    PRIVATE 
+        ${CMAKE_SOURCE_DIR}/include 
+        ${Boost_INCLUDE_DIR} 
+        ${SPARSEHASH_INCLUDE_DIR}
+        /usr/local/include
+)
 
 set_target_properties(FSQM PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/tool")
+
+# 添加 Boost 查找
+find_package(Boost REQUIRED)
 
 
