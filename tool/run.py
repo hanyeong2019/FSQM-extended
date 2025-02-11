@@ -225,6 +225,12 @@ for benchResult in benchresult:
                 s2, "|", s3, "|",
                 s4, "|", s5, "|",
                 e)
-avg_improve = round(sum(avg_set)/len(avg_set), 6)
+
+# 添加检查避免除零错误
+if len(avg_set) > 0:
+    avg_improve = round(sum(avg_set)/len(avg_set), 6)
+else:
+    avg_improve = 0  # 或者设置为其他默认值
+
 print("----------------------------------------------------------------------------")
 print("==> avg_improve: ", avg_improve)

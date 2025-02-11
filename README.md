@@ -21,6 +21,7 @@ We present an efficient qubit-mapping method that redesigns a quantum circuit to
 [~/FSQM] mkdir build && cd build
 [~/FSQM/build] cmake ..
 [~/FSQM/build] make -j
+根目录需要创建log文件夹
 ```
 
 ### Run

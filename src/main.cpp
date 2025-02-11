@@ -47,6 +47,7 @@ int main(int argc, char** argv)
     bool forward = true;
 
         // No Bridge
+    cout << "\n\t============= initial Mapping ===============" << endl;
     mapper.initial_mapping(ARCHI, PRE_PROCESSING, false, false, INITIAL);
     mapper.Circuit_Mapping(mapper.Dgraph, ARCHI, forward, PRE_PROCESSING, false, false);
     

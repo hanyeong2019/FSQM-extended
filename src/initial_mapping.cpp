@@ -7,6 +7,8 @@ using namespace Qcircuit;
 
 void Qcircuit::QMapper::initial_mapping(ARCHITECTURE archi, bool prepro, bool postpro, bool BRIDGE_MODE, INITIALTYPE initial_type)
 {
+    cout << "运行initial_mapping" << endl;
+
     //initial mapping
     if(!prepro)
     {

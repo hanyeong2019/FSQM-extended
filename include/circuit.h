@@ -43,6 +43,7 @@ namespace Qcircuit
     enum class ARCHITECTURE
     {
         IBM_Q_20,
+        IBM_Q_127
     };
 
     enum class GATETYPE
@@ -222,6 +223,7 @@ namespace Qcircuit
             //couplinggraph.cpp
             void select_coupling_graph(ARCHITECTURE archi);
             void build_graph_IBM_Q_20();            
+            void build_graph_IBM_Q_127();            
 
             //initial_mapping.cpp
             void initial_mapping(ARCHITECTURE archi, bool prepro, bool postpro, bool BRIDGE_MODE, INITIALTYPE initial_type);
